@@ -10,19 +10,36 @@ const checkNumber = require("./utils/checkNumber");
 		module.exports = fs.readFileSync(filename, 'utf8');
 	};
 
-	var phonenumber = require("./input.txt");
+	var inputData = require("./input.txt");
 
-	console.log(phonenumber); // string
+	//console.log(inputData); // string
+	var phonenumber = inputData.split(',');
+	var existPhoneNumber = phonenumber;
+	var nonExistPhoneNumber = phonenumber;
 	
-	if (process.argv.length < 3) {
-		log(chalk.red.bold("No Phone Number has been passed"));
-		log(chalk.blue("Example: npm run check 919898989898"));
-		process.exit(0);
+	//console.log(phonenumber.length); // string
+	//console.log(phonenumber); // string
+	
+	//const phonenumber = process.argv[2];
+	var i = 0;
+	for (i = 0; i < phonenumber.length; i ++){
+		log(chalk.blue(`Checking for Existence : ${phonenumber[i]}`));
+		const numberExists = await checkNumber(phonenumber[i]);
+		if (numberExists) log(chalk.green.bold("Number Exists on Whatsapp"));
+		else log(chalk.red.bold("Number doesn't exist on Whatsapp"));
+		if (numberExists) nonExistPhoneNumber.splice(i, 1);
+		else existPhoneNumber.splice(i, 1);
 	}
-	//const phoneNumber = process.argv[2];
-	log(chalk.blue(`Checking for Existence : ${phoneNumber}`));
-	const numberExists = await checkNumber(phoneNumber);
-	if (numberExists) log(chalk.green.bold("Number Exists on Whatsapp"));
-	else log(chalk.red.bold("Number doesn't exist on Whatsapp"));
+	fs = require('fs');
+	fs.writeFile('existList.txt', existPhoneNumber, function (err) {
+	  if (err) return console.log(err);
+	  console.log('output.txt exported.');
+	});
+	fs = require('fs');
+	fs.writeFile('nonExistList.txt', nonExistPhoneNumber, function (err) {
+	  if (err) return console.log(err);
+	  console.log('output.txt exported.');
+	});
+	
 	process.exit(0);
 })();
