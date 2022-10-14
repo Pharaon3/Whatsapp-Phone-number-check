@@ -1,0 +1,21 @@
+{
+  "name": "whatsapp phone number check",
+  "version": "1.0.0",
+  "description": "Check if a phone number has an associated Whatsapp account",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "login": "node src/login",
+    "check": "node src/check",
+    "server": "node src/server"
+  },
+  "keywords": [],
+  "author": "James Stewart",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "chalk": "^4.1.0",
+    "express": "^4.17.1",
+    "puppeteer": "^5.4.1",
+    "xhr2": "^0.2.1"
+  }
+}
